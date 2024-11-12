@@ -25,7 +25,6 @@ namespace Console_Banking_Application.Menus
                     {
                         // Perform deposit
                         transactionService.Deposit(accountNumber, amount);
-                        Console.WriteLine($"Successfully deposited {amount:C} into account {accountNumber}.");
                         return;
                     }
                     else
