@@ -101,7 +101,7 @@ namespace Console_Banking_Application.Services
         }
 
         // Helper method to find an account by its number
-        private Account GetAccountByNumber(int accountNumber)
+        public Account GetAccountByNumber(int accountNumber)
         {
             return accounts.FirstOrDefault(acc => acc.AccountNumber == accountNumber);
         }

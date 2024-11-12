@@ -1,0 +1,2 @@
+1. The error message when we select the wrong type of account creation appears later after inputting the amount.
+2. when two user register, the second user can access the amount of first user by entering the first user account number.
