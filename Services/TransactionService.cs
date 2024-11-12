@@ -33,7 +33,7 @@ namespace Console_Banking_Application.Services
                 var account = accountService.GetAccountByNumber(accountNumber);
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please check the account number.");
+                    Console.WriteLine("ERROR: Account not found. Please check the account number.");
                     return false;
                 }
 
@@ -62,7 +62,7 @@ namespace Console_Banking_Application.Services
                 // Validate withdrawal amount
                 if (amount <= 0)
                 {
-                    Console.WriteLine("Withdrawal amount must be greater than zero.");
+                    Console.WriteLine("ERROR: Withdrawal amount must be greater than zero.");
                     return false;
                 }
 
@@ -70,14 +70,14 @@ namespace Console_Banking_Application.Services
                 var account = accountService.GetAccountByNumber(accountNumber);
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please check the account number.");
+                    Console.WriteLine("ERROR: Account not found. Please check the account number.");
                     return false;
                 }
 
                 // Check for sufficient balance
                 if (amount > account.Balance)
                 {
-                    Console.WriteLine("Insufficient funds. Unable to process withdrawal.");
+                    Console.WriteLine("ERROR: Insufficient funds. Unable to process withdrawal.");
                     return false;
                 }
 
@@ -107,11 +107,11 @@ namespace Console_Banking_Application.Services
 
                 if (accountTransactions.Count == 0)
                 {
-                    Console.WriteLine("No transactions found for this account.");
+                    Console.WriteLine("ERROR: No transactions found for this account.");
                     return;
                 }
 
-                Console.WriteLine("\n--- Transaction History ---");
+                Console.WriteLine("\n--- Transaction History ---\n");
                 foreach (var transaction in accountTransactions)
                 {
                     transaction.DisplayTransactionInfo();

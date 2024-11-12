@@ -40,7 +40,7 @@ namespace Console_Banking_Application.Services
 
             if (user == null)
             {
-                Console.WriteLine("Invalid username or password.");
+                Console.WriteLine("ERROR: Invalid username or password.");
                 return null;
             }
 

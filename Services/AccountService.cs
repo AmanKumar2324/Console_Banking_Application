@@ -20,14 +20,14 @@ namespace Console_Banking_Application.Services
                 // Validate account type
                 if (accountType.ToLower() != "savings" && accountType.ToLower() != "checking")
                 {
-                    Console.WriteLine("Invalid account type. Please choose either 'Savings' or 'Checking'.");
+                    Console.WriteLine("ERROR: Invalid account type. Please choose either 'Savings' or 'Checking'.");
                     return false;
                 }
 
                 // Ensure initial deposit is not negative
                 if (initialDeposit < 0)
                 {
-                    Console.WriteLine("Initial deposit cannot be negative.");
+                    Console.WriteLine("ERROR: Initial deposit cannot be negative.");
                     return false;
                 }
 
@@ -54,7 +54,7 @@ namespace Console_Banking_Application.Services
 
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please enter valid account number or open new account if not opened.");
+                    Console.WriteLine("ERROR: Account not found. Please enter valid account number or open new account if not opened.");
                     return -1;
                 }
 
@@ -76,7 +76,7 @@ namespace Console_Banking_Application.Services
 
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please enter valid account number or open new account if not opened.");
+                    Console.WriteLine("ERROR: Account not found. Please enter valid account number or open new account if not opened.");
                     return false;
                 }
 

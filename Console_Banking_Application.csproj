@@ -43,9 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Database.cs" />
     <Compile Include="Menus\AccountMenu.cs" />
-    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\LoginMenu.cs" />
+    <Compile Include="Menus\RegistrationMenu.cs" />
     <Compile Include="Menus\TransactionMenu.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -53,17 +53,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\InterestCalculator.cs" />
     <Compile Include="Services\TransactionService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Utils\ConsoleHelper.cs" />
     <Compile Include="Utils\Validator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="BugsToBeFixed.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
