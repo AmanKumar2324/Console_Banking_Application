@@ -109,87 +109,215 @@ namespace Console_Banking_Application
             }
         }
 
-        // Method to register a new user
+        // METHOD TO REGISTER A NEW USER
         static void RegisterUser(UserService userService)
         {
-            Console.WriteLine("\n--- User Registration ---");
-            Console.Write("Enter Full Name: ");
-            string fullName = Console.ReadLine();
-            Console.Write("Enter Username: ");
-            string username = Console.ReadLine();
-            Console.Write("Enter Password: ");
-            string password = Console.ReadLine();
-
-            if (Validator.IsValidInput(fullName) && Validator.IsValidInput(username) && Validator.IsValidInput(password))
+            Console.WriteLine("\n--- User Registration ---\n");
+            // Get full name
+            string fullName;
+            while (true)
             {
-                userService.RegisterUser(username, password, fullName);
+                Console.Write("Enter Full Name (or type 'back' to return to main menu): ");
+                fullName = Console.ReadLine();
+                if (fullName.ToLower() == "back")
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(fullName))
+                {
+                    Console.WriteLine("Error: Full Name cannot be empty. Please enter a valid Full Name.");
+                }
+                else
+                {
+                    break;
+                }
             }
-            else
+            // Get username
+            string username;
+            while (true)
             {
-                Console.WriteLine("Error: All fields are required for registration.");
+                Console.Write("Enter Username (or type 'back' to return to main menu): ");
+                username = Console.ReadLine();
+                if (username.ToLower() == "back")
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    Console.WriteLine("Error: Username cannot be empty. Please enter a valid Username.");
+                }
+                else
+                {
+                    break;
+                }
             }
+            // Get password
+            string password;
+            while (true)
+            {
+                Console.Write("Enter Password (or type 'back' to return to main menu): ");
+                password = Console.ReadLine();
+                if (password.ToLower() == "back")
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    Console.WriteLine("Error: Password cannot be empty. Please enter a valid Password.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            // Once all fields are validated, calling the RegisterUser method
+            userService.RegisterUser(username, password, fullName);
         }
 
-        // Method for user login
+
+
+
+        // METHOD FOR USER LOGIN
         static string LoginUser(UserService userService)
         {
-            Console.WriteLine("\n--- User Login ---");
-            Console.Write("Enter Username: ");
-            string username = Console.ReadLine();
-            Console.Write("Enter Password: ");
-            string password = Console.ReadLine();
-
+            Console.WriteLine("\n--- User Login ---\n");
+            // Get username and ensuring it's not empty
+            string username;
+            while (true)
+            {
+                Console.Write("Enter Username (or type 'back' to return to the main menu): ");
+                username = Console.ReadLine();
+                if (username.ToLower() == "back")
+                {
+                    return null;
+                }
+                if (string.IsNullOrWhiteSpace(username))
+                {
+                    Console.WriteLine("Error: Username cannot be empty. Please enter a valid Username.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            string password;
+            while (true)
+            {
+                Console.Write("Enter Password (or type 'back' to return to the main menu): ");
+                password = Console.ReadLine();
+                if (password.ToLower() == "back")
+                {
+                    return null;
+                }
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    Console.WriteLine("Error: Password cannot be empty. Please enter a valid Password.");
+                }
+                else
+                {
+                    break;
+                }
+            }
+            // After both fields are validated, attempt login
             var user = userService.Login(username, password);
             if (user != null)
             {
+                Console.WriteLine($"User '{user.Username}' successfully logged in.");
                 Console.WriteLine($"Welcome, {user.FullName}!");
                 return user.Username;
             }
             else
             {
-                Console.WriteLine("Error: Invalid username or password.");
                 return null;
             }
         }
 
-        // Method to open a new account
+
+
+        // METHOD TO OPEN A NEW ACCOUNT
         static void OpenAccount(AccountService accountService, string username)
         {
             Console.WriteLine("\n--- Open a New Account ---");
-            Console.Write("Enter Account Type (Savings/Checking): ");
-            string accountType = Console.ReadLine();
-            Console.Write("Enter Initial Deposit: ");
-            if (decimal.TryParse(Console.ReadLine(), out decimal initialDeposit))
+            // Get account type and ensure it's valid (either "Savings" or "Checking")
+            string accountType;
+            while (true)
             {
-                accountService.OpenAccount(username, accountType, initialDeposit);
+                Console.Write("Enter Account Type 'Savings'/'Checking' (or type 'back' to return to the main menu) : ");
+                accountType = Console.ReadLine();
+                if (accountType.ToLower() == "back")
+                {
+                    return;
+                }
+                // Check if the account type is valid
+                if (accountType.Equals("Savings", StringComparison.OrdinalIgnoreCase) ||
+                    accountType.Equals("Checking", StringComparison.OrdinalIgnoreCase))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Error: Invalid account type. Please enter either 'Savings' or 'Checking'.");
+                }
             }
-            else
+            // Get initial deposit amount after valid account type is entered
+            decimal initialDeposit;
+            while (true)
             {
-                Console.WriteLine("Error: Invalid deposit amount.");
+                Console.Write("Enter Initial Deposit: ");
+                if (decimal.TryParse(Console.ReadLine(), out initialDeposit) && initialDeposit >= 0)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Error: Invalid deposit amount. Please enter a valid number greater than or equal to 0.");
+                }
+            }
+            // Now, after both account type and initial deposit are validated, open the account
+            accountService.OpenAccount(username, accountType, initialDeposit);
+        }
+
+
+
+        // METHOD TO CHECK THE ACCOUNT BALANCE
+        static void CheckBalance(AccountService accountService)
+        {
+            Console.WriteLine("\n--- Check Account Balance ---");
+            while (true)
+            {
+                Console.Write("Enter Account Number (or type 'back' to return to the main menu): ");
+                string input = Console.ReadLine();
+
+                // Check if user wants to go back to the main menu
+                if (input.ToLower() == "back")
+                {
+                    return;
+                }
+                // Validate the account number input
+                if (int.TryParse(input, out int accountNumber))
+                {
+                    // Attempt to retrieve the balance
+                    decimal balance = accountService.CheckBalance(accountNumber);
+                    if (balance != -1)
+                    {
+                        // Display the balance if account exists
+                        Console.WriteLine($"Current Balance: {balance:C}");
+                        return; // Exit the loop after displaying the balance
+                    }
+                }
+                else
+                {
+                    // Error message for invalid input
+                    Console.WriteLine("Error: Invalid account number. Please enter a valid account number.");
+                }
             }
         }
 
-        // Method to check account balance
-        static void CheckBalance(AccountService accountService)
-        {
-            Console.Write("Enter Account Number: ");
-            if (int.TryParse(Console.ReadLine(), out int accountNumber))
-            {
-                decimal balance = accountService.CheckBalance(accountNumber);
-                if (balance != -1)
-                {
-                    Console.WriteLine($"Current Balance: {balance:C}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Error: Invalid account number.");
-            }
-        }
 
         // Method to deposit money
         static void DepositMoney(TransactionService transactionService)
         {
+            Console.WriteLine("\n--- Deposit Amount ---\n");
             Console.Write("Enter Account Number: ");
             if (int.TryParse(Console.ReadLine(), out int accountNumber))
             {

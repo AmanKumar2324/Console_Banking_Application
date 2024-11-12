@@ -44,7 +44,7 @@ namespace Console_Banking_Application.Services
                 return null;
             }
 
-            Console.WriteLine($"Welcome, {user.FullName}!");
+            //Console.WriteLine($"Welcome, {user.FullName}!");
             return user;
         }
 

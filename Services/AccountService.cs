@@ -54,7 +54,7 @@ namespace Console_Banking_Application.Services
 
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please check the account number.");
+                    Console.WriteLine("Account not found. Please enter valid account number or open new account if not opened.");
                     return -1;
                 }
 
@@ -76,7 +76,7 @@ namespace Console_Banking_Application.Services
 
                 if (account == null)
                 {
-                    Console.WriteLine("Account not found. Please check the account number.");
+                    Console.WriteLine("Account not found. Please enter valid account number or open new account if not opened.");
                     return false;
                 }
 
