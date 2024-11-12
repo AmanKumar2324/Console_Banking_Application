@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Console_Banking_Application.Utils
 {
-    internal class Validator
+    public static class Validator
     {
+        // Validate if a string is null, empty, or whitespace
+        public static bool IsValidInput(string input)
+        {
+            return !string.IsNullOrWhiteSpace(input);
+        }
     }
 }
