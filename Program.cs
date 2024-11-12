@@ -14,6 +14,7 @@ namespace Console_Banking_Application
         {
             Console.Title = "Banking Application";
             UserService userService = new UserService();
+            AccountService accountService = new AccountService();
             bool exit = false;
 
             while (!exit)
@@ -21,7 +22,10 @@ namespace Console_Banking_Application
                 Console.WriteLine("\n--- Banking Application Menu ---");
                 Console.WriteLine("1. Register");
                 Console.WriteLine("2. Login");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("3. Open Account");
+                Console.WriteLine("4. Check Balance");
+                Console.WriteLine("5. Calculate Interest (Savings Accounts)");
+                Console.WriteLine("6. Exit");
                 Console.Write("Select an option: ");
 
                 string choice = Console.ReadLine();
@@ -37,7 +41,6 @@ namespace Console_Banking_Application
                         Console.Write("Enter Password: ");
                         string password = Console.ReadLine();
 
-                        // Validate inputs
                         if (Validator.IsValidInput(fullName) && Validator.IsValidInput(username) && Validator.IsValidInput(password))
                         {
                             userService.RegisterUser(username, password, fullName);
@@ -55,16 +58,65 @@ namespace Console_Banking_Application
                         Console.Write("Enter Password: ");
                         string loginPassword = Console.ReadLine();
 
-                        // Attempt login
-                        var user = userService.Login(loginUsername, loginPassword);
-                        if (user != null)
-                        {
-                            Console.WriteLine($"Successfully logged in as {user.FullName}.");
-                        }
+                        userService.Login(loginUsername, loginPassword);
                         break;
 
                     case "3":
-                        // Exit
+                        // Open Account
+                        Console.Write("Enter Account Holder Name: ");
+                        string accHolderName = Console.ReadLine();
+                        Console.Write("Enter Account Type (Savings/Checking): ");
+                        string accType = Console.ReadLine();
+                        Console.Write("Enter Initial Deposit Amount: ");
+                        if (decimal.TryParse(Console.ReadLine(), out decimal initialDeposit))
+                        {
+                            accountService.OpenAccount(accHolderName, accType, initialDeposit);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid deposit amount.");
+                        }
+                        break;
+
+                    case "4":
+                        // Check Balance
+                        Console.Write("Enter Account Number: ");
+                        if (int.TryParse(Console.ReadLine(), out int accountNumber))
+                        {
+                            decimal balance = accountService.CheckBalance(accountNumber);
+                            if (balance != -1)
+                            {
+                                Console.WriteLine($"Current Balance: {balance:C}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid account number.");
+                        }
+                        break;
+
+                    case "5":
+                        // Calculate Interest
+                        Console.Write("Enter Account Number: ");
+                        if (int.TryParse(Console.ReadLine(), out int accNum))
+                        {
+                            Console.Write("Enter Interest Rate (in %): ");
+                            if (decimal.TryParse(Console.ReadLine(), out decimal interestRate))
+                            {
+                                accountService.CalculateInterest(accNum, interestRate);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid interest rate.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid account number.");
+                        }
+                        break;
+
+                    case "6":
                         Console.WriteLine("Exiting the application. Goodbye!");
                         exit = true;
                         break;
